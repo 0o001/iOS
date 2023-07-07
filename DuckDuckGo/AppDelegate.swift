@@ -228,8 +228,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
         appIsLaunching = true
+
+        // TEMPORARY: Attempting to trigger CodeQL:
+        test()
+
         return true
     }
+
+    @discardableResult
+    func test() -> Data? {
+        let fm = FileManager.default
+        guard let path = try? String(contentsOf: URL(string: "http://example.com/")!) else {
+            return nil
+        }
+
+        return fm.contents(atPath: path)
+    }
+
 
     private func cleanUpMacPromoExperiment2() {
         UserDefaults.standard.removeObject(forKey: "com.duckduckgo.ios.macPromoMay23.exp2.cohort")
